@@ -1,0 +1,6 @@
+packages
+bin
+node_modules
+obj
+*.suo
+.vs
