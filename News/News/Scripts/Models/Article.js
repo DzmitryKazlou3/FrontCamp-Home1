@@ -1,6 +1,6 @@
 // Represents the single news item.
-class NewsItem {
-    constructor(author, title, description, url, urlToImage, publishedAt) {
+class Article {
+    constructor(title, url, description, author, urlToImage, publishedAt) {
         this.author = author;
         this.title = title;
         this.description = description;

@@ -66,6 +66,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app-min.js" />
+    <Content Include="articles.html" />
     <Content Include="packages.config" />
     <Content Include="package.json" />
     <None Include="Web.Debug.config">
@@ -78,14 +80,14 @@
   <ItemGroup>
     <Content Include="gruntfile.js" />
     <Content Include="index.html" />
-    <Content Include="Scripts\app-min.js" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\Common\Urls.js" />
     <Content Include="Scripts\Controllers\SourceController.js" />
-    <Content Include="Scripts\Models\News.js" />
-    <Content Include="Scripts\Models\NewsItem.js" />
+    <Content Include="Scripts\Models\Articles.js" />
+    <Content Include="Scripts\Models\Article.js" />
     <Content Include="Scripts\Models\SourceItem.js" />
     <Content Include="Scripts\Models\UrlsToLogos.js" />
+    <Content Include="Scripts\Services\ArticleService.js" />
     <Content Include="Scripts\Services\SourceService.js" />
     <Content Include="Scripts\Views\SourcesView.js" />
     <Content Include="Web.config" />
