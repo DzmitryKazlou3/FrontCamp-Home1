@@ -2,6 +2,7 @@
 class SourcePresenter {
     constructor(sourceView, sourceService, observable) {
         this._observable = observable;
+        observable.addObserver("back", this.loadSources.bind(this));
         this._sourceService = sourceService;
         this._sourceView = sourceView;
         this._sourceView.Presenter = this;
@@ -9,10 +10,8 @@ class SourcePresenter {
     }
 
     set SelectedSourceId(value) {
-        if (this._selectedSourceId !== value) {
-            this._selectedSourceId = value;
-            this._observable.emit("sourceChanged", this._selectedSourceId);
-        }
+        this._selectedSourceId = value;
+        this._observable.emit("sourceChanged", this._selectedSourceId);
     }
 
     loadSources() {

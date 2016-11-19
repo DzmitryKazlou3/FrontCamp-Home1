@@ -1,5 +1,6 @@
 ﻿class ArticlesPresenter {
     constructor(articlesView, articleService, observable) {
+        this._observable = observable;
         observable.addObserver("sourceChanged", this.onSourceChanged.bind(this));
         this._articleService = articleService;
         this._articlesView = articlesView;
@@ -21,5 +22,9 @@
 
     setArticles(articles) {
         this._articlesView.showArticles(articles);
+    }
+
+    goBack() {
+        this._observable.emit("back");
     }
 }

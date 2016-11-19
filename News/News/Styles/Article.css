@@ -1,0 +1,42 @@
+﻿.article-item-header {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.article-item-description {
+    text-align:justify;
+}
+
+.article-image {
+    height: 180px;
+}
+
+.article-text-area {
+    
+}
+
+/*when width >= 992*/
+/*wide sreens*/
+@media (min-width: 992px) {
+    .article-max-cell-width {
+        max-width: 300px;
+    }
+}
+
+/*laptop*/
+/*medium*/
+@media (min-width: 768px) and (max-width: 991px) {
+    .article-max-cell-width {
+        max-width: 300px;
+    }
+}
+
+/*mobile*/
+/*small*/
+@media (max-width: 767px) and (min-width: 639px) {
+    .article-max-cell-width {
+        max-width: 300px;
+    }
+}

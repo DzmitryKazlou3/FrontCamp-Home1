@@ -1,0 +1,35 @@
+﻿.source-image {
+    height: 200px;
+}
+
+.source-item-class {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+@media (min-width: 992px) {
+    .column-1of3 {
+        float: left;
+        width: 30%;
+    }
+}
+
+/*laptop*/
+/*medium*/
+@media (min-width: 768px) and (max-width: 991px) {
+    .source-item-class {
+        margin-top: 4px;
+        padding: 4px;
+    }
+}
+
+/*mobile*/
+/*small*/
+@media (max-width: 767px) {
+    .source-item-class {
+        margin-top: 4px;
+        padding: 4px;
+    }
+}

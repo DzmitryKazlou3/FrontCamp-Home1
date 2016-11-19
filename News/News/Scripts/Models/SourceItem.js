@@ -8,7 +8,7 @@ class SourceItem {
         this.category = category;
         this.language = language;
         this.country = country;
-        this.urlsToLogos = urlsToLogos;
+        this.urlsToLogos = new UrlsToLogos(urlsToLogos.small, urlsToLogos.medium, urlsToLogos.large);
         this.sortBysAvailable = sortBysAvailable;
     }
 }

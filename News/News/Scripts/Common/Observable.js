@@ -7,7 +7,8 @@
         this._observers.has(label) || this._observers.set(label, []);
         this._observers.get(label).push(callback);
     }
-    removeListener(label, callback) {
+
+    removeObserver(label, callback) {
         let observers = this._observers.get(label);
         let index;
 
@@ -26,6 +27,7 @@
         }
         return false;
     }
+
     emit(label, ...args) {
         let observers = this._observers.get(label);
         if (observers && observers.length) {

@@ -96,6 +96,9 @@
     <Content Include="Scripts\Views\SourcesView.js" />
     <Content Include="Scripts\Views\Templates.js" />
     <Content Include="Scripts\Views\View.js" />
+    <Content Include="Styles\article.css" />
+    <Content Include="Styles\site.css" />
+    <Content Include="Styles\sources.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

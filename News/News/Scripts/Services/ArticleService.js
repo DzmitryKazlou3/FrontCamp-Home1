@@ -22,7 +22,15 @@ class ArticlesService {
             }).then(function (json) {
                 let articlesModel = new Articles(json.source, json.sortBy);
                 for (let article of json.articles) {
-                    articlesModel.Add(new Article(article.title, article.url));
+                //title, url, description, author, urlToImage, publishedAt
+                    articlesModel.Add(
+                        new Article(
+                        article.title,
+                        article.url,
+                        article.description,
+                        article.author,
+                        article.urlToImage,
+                        article.publishedAt));
                 }
                 return articlesModel;
             })
