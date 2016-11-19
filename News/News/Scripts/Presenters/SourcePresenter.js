@@ -1,17 +1,17 @@
-// The source controller
-class SourceController {
-    constructor(sourceView, sourceService, articleService) {
+// The source Presenter
+class SourcePresenter {
+    constructor(sourceView, sourceService, observable) {
+        this._observable = observable;
         this._sourceService = sourceService;
-        this._articleService = articleService;
         this._sourceView = sourceView;
-        this._sourceView.Controller = this;
+        this._sourceView.Presenter = this;
         this._selectedSourceId = null;
     }
 
     set SelectedSourceId(value) {
         if (this._selectedSourceId !== value) {
             this._selectedSourceId = value;
-            this.loadArticles(this._selectedSourceId);
+            this._observable.emit("sourceChanged", this._selectedSourceId);
         }
     }
 
@@ -27,19 +27,7 @@ class SourceController {
             }).catch(err => alert(err));
     }
 
-    loadArticles(sourceId) {
-        this._articleService.getArticlesBySourceId(sourceId)
-            .then(articlesModel => {
-                this.setArticles(articlesModel.Articles);
-            })
-            .catch(err => alert(err));
-    }
-
     setSources(sourceItems) {
         this._sourceView.showSources(sourceItems);
-    }
-
-    setArticles(articles) {
-        this._sourceView.showArticles(articles);
     }
 }

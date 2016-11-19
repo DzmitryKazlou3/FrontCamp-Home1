@@ -1,5 +1,5 @@
 ﻿// The article service
-class ArticleService {
+class ArticlesService {
     constructor() {
     }
 

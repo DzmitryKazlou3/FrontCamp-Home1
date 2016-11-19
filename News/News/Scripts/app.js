@@ -1,4 +1,4 @@
 (function() {
-    let sourceController = new SourceController(new SourcesView(), new SourceService(), new ArticleService());
-    sourceController.loadSources();
+    let mainPresenter = new MainPresenter();
+    mainPresenter.initialize();
 })();

@@ -1,1 +1,317 @@
-"use strict";function _classCallCheck(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}var _createClass=function(){function a(a,b){for(var c=0;c<b.length;c++){var d=b[c];d.enumerable=d.enumerable||!1,d.configurable=!0,"value"in d&&(d.writable=!0),Object.defineProperty(a,d.key,d)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),host="https://newsapi.org/",apiVersion="v1/",Sources="sources/",ArticlesUrl="/articles?source=",URLS=function(){function a(){_classCallCheck(this,a)}return _createClass(a,null,[{key:"HOST",get:function(){return host}},{key:"API_VERSION",get:function(){return apiVersion}},{key:"SOURCES",get:function(){return Sources}},{key:"ARTICLES",get:function(){return ArticlesUrl}}]),a}(),Article=function a(b,c,d,e,f,g){_classCallCheck(this,a),this.author=e,this.title=b,this.description=d,this.url=c,this.urlToImage=f,this.publishedAt=g},Articles=function(){function a(b,c){_classCallCheck(this,a),this.source=b,this.sortBy=c,this._articles=[]}return _createClass(a,[{key:"Add",value:function(a){this._articles.push(a)}},{key:"Articles",get:function(){return this._articles}}]),a}(),SourceItem=function a(b,c,d,e,f,g,h,i,j){_classCallCheck(this,a),this.id=b,this.name=c,this.description=d,this.url=e,this.category=f,this.language=g,this.country=h,this.urlsToLogos=i,this.sortBysAvailable=j},UrlsToLogos=function a(b,c,d){_classCallCheck(this,a),this.small=b,this.medium=c,this.large=d},SourceService=function(){function a(){_classCallCheck(this,a)}return _createClass(a,[{key:"getSources",value:function(){return fetch(URLS.HOST+URLS.API_VERSION+URLS.SOURCES).then(function(a){return a.ok?a.json():void console.log(a.statusText)}).then(function(a){var b=[],c=!0,d=!1,e=void 0;try{for(var f,g=a.sources[Symbol.iterator]();!(c=(f=g.next()).done);c=!0){var h=f.value;b.push(new SourceItem(h.id,h.name))}}catch(a){d=!0,e=a}finally{try{!c&&g.return&&g.return()}finally{if(d)throw e}}return b}).catch(function(a){console.log(a)})}}]),a}(),ArticleService=function(){function a(){_classCallCheck(this,a)}return _createClass(a,[{key:"getArticlesBySourceId",value:function(a){var b=new Headers;b.append("X-Api-Key","caa2a0adb8424a32bb0a582406293aa1");var c={method:"GET",headers:b,mode:"cors",cache:"default"};return fetch(URLS.HOST+URLS.API_VERSION+URLS.ARTICLES+a,c).then(function(a){return a.ok?a.json():void console.log(a.statusText)}).then(function(a){var b=new Articles(a.source,a.sortBy),c=!0,d=!1,e=void 0;try{for(var f,g=a.articles[Symbol.iterator]();!(c=(f=g.next()).done);c=!0){var h=f.value;b.Add(new Article(h.title,h.url))}}catch(a){d=!0,e=a}finally{try{!c&&g.return&&g.return()}finally{if(d)throw e}}return b}).catch(function(a){console.log(a)})}}]),a}(),SourceController=function(){function a(b,c,d){_classCallCheck(this,a),this._sourceService=c,this._articleService=d,this._sourceView=b,this._sourceView.Controller=this,this._selectedSourceId=null}return _createClass(a,[{key:"loadSources",value:function(){var a=this;return this._sourceService.getSources().then(function(b){b?a.setSources(b):alert("there is no source items")}).catch(function(a){return alert(a)})}},{key:"loadArticles",value:function(a){var b=this;this._articleService.getArticlesBySourceId(a).then(function(a){b.setArticles(a.Articles)}).catch(function(a){return alert(a)})}},{key:"setSources",value:function(a){this._sourceView.showSources(a)}},{key:"setArticles",value:function(a){this._sourceView.showArticles(a)}},{key:"SelectedSourceId",set:function(a){this._selectedSourceId!==a&&(this._selectedSourceId=a,this.loadArticles(this._selectedSourceId))}}]),a}(),sourceItemTemplate=function(a){return"<div>"+a.name+"</div>"},articleItemTemplate=function(a){return'<a href="'+a.url+'">'+a.title+"</a>"},SourcesView=function(){function a(){_classCallCheck(this,a),this.sourcesListControl=document.getElementById("view"),this._controller=null,this.handleEvent=function(a){switch(console.log(this.name),a.type){case"click":this.onSourceSelected(a)}}}return _createClass(a,[{key:"showSources",value:function(a){this.clearView();var b=document.createElement("div"),c=!0,d=!1,e=void 0;try{for(var f,g=a[Symbol.iterator]();!(c=(f=g.next()).done);c=!0){var h=f.value,i=document.createElement("div");i.innerHTML=sourceItemTemplate(h),i.setAttribute("data-source-id",h.id),i.addEventListener("click",this,!1),b.appendChild(i)}}catch(a){d=!0,e=a}finally{try{!c&&g.return&&g.return()}finally{if(d)throw e}}this.sourcesListControl.appendChild(b)}},{key:"onSourceSelected",value:function(a){a.preventDefault();var b=a.currentTarget;null!=this._controller&&(this._controller.SelectedSourceId=b.getAttribute("data-source-id"))}},{key:"showArticles",value:function(a){this.clearView();var b=document.createElement("div"),c=document.createElement("div");c.innerHTML='<a href="'+window.location.href+'">Back</div>',b.appendChild(c);var d=!0,e=!1,f=void 0;try{for(var g,h=a[Symbol.iterator]();!(d=(g=h.next()).done);d=!0){var i=g.value,j=document.createElement("div");j.innerHTML=articleItemTemplate(i),b.appendChild(j)}}catch(a){e=!0,f=a}finally{try{!d&&h.return&&h.return()}finally{if(e)throw f}}this.sourcesListControl.appendChild(b)}},{key:"clearView",value:function(){this.sourcesListControl.innerHTML=""}},{key:"Controller",set:function(a){this._controller=a}}]),a}();!function(){var a=new SourceController(new SourcesView,new SourceService,new ArticleService);a.loadSources()}();
+// JavaScript source code
+const host = "https://newsapi.org/",
+    apiVersion = "v1/",
+    Sources = "sources/",
+    ArticlesUrl = "/articles?source=";
+
+class URLS
+{
+    static get HOST() {
+        return host;
+    }
+
+    static get API_VERSION() {
+        return apiVersion;
+    }
+
+    static get SOURCES() {
+        return Sources;
+    }
+
+    static get ARTICLES() {
+        return ArticlesUrl;
+    }
+};class Observable{
+    constructor() {
+        this._observers = new Map();
+    }
+
+    addObserver(label, callback) {
+        this._observers.has(label) || this._observers.set(label, []);
+        this._observers.get(label).push(callback);
+    }
+    removeListener(label, callback) {
+        let observers = this._observers.get(label);
+        let index;
+
+        if (observers && observers.length) {
+            index = observers.reduce((i, observer, index) => {
+                return (isFunction(observer) && observer === callback) ?
+                    i = index :
+                    i;
+            }, -1);
+
+            if (index > -1) {
+                observers.splice(index, 1);
+                this._observers.set(label, observers);
+                return true;
+            }
+        }
+        return false;
+    }
+    emit(label, ...args) {
+        let observers = this._observers.get(label);
+        if (observers && observers.length) {
+            observers.forEach((observer) => {
+                observer(...args);
+            });
+            return true;
+        }
+        return false;
+    }
+};// Represents the single news item.
+class Article {
+    constructor(title, url, description, author, urlToImage, publishedAt) {
+        this.author = author;
+        this.title = title;
+        this.description = description;
+        this.url = url;
+        this.urlToImage = urlToImage;
+        this.publishedAt = publishedAt;
+    }
+};// Represents the news given by source
+class Articles{
+    constructor(source, sortBy) {
+        this.source = source;
+        this.sortBy = sortBy;
+        this._articles = [];
+    }
+
+    Add(article) {
+        this._articles.push(article);
+    }
+
+    get Articles() {
+        return this._articles;
+    }
+};// Represents the source
+class SourceItem {
+    constructor(id, name, description, url, category, language, country, urlsToLogos, sortBysAvailable) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.url = url;
+        this.category = category;
+        this.language = language;
+        this.country = country;
+        this.urlsToLogos = urlsToLogos;
+        this.sortBysAvailable = sortBysAvailable;
+    }
+};// The url to logos class
+class UrlsToLogos {
+    constructor(small, medium, large) {
+        this.small = small;
+        this.medium = medium;
+        this.large = large;
+    }
+};// JavaScript source code
+class SourceService {
+    constructor() {
+    }
+
+    getSources() {
+        return fetch(URLS.HOST + URLS.API_VERSION + URLS.SOURCES)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    console.log(response.statusText);
+                }
+            }).then(function(json) {
+                let sourceItems = [];
+                for (let source of json.sources) {
+                    // id, name, description, url, category, language, country, urlsToLogos, sortBysAvailable
+                    sourceItems.push(new SourceItem(source.id, source.name));
+                }
+
+                return sourceItems;
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+};// The article service
+class ArticlesService {
+    constructor() {
+    }
+
+    getArticlesBySourceId(sourceId) {
+        let headers = new Headers();
+        headers.append("X-Api-Key", "caa2a0adb8424a32bb0a582406293aa1");
+        let init = {
+            method: 'GET',
+            headers: headers,
+            mode: 'cors',
+            cache: 'default'
+        };
+        return fetch(URLS.HOST + URLS.API_VERSION + URLS.ARTICLES + sourceId, init)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    console.log(response.statusText);
+                }
+            }).then(function (json) {
+                let articlesModel = new Articles(json.source, json.sortBy);
+                for (let article of json.articles) {
+                    articlesModel.Add(new Article(article.title, article.url));
+                }
+                return articlesModel;
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+};class ArticlesPresenter {
+    constructor(articlesView, articleService, observable) {
+        observable.addObserver("sourceChanged", this.onSourceChanged.bind(this));
+        this._articleService = articleService;
+        this._articlesView = articlesView;
+        this._articlesView.Presenter = this;
+    }
+
+    // called from observable, when "sourceChanged" is emited.
+    onSourceChanged(newSourceId) {
+        this.loadArticles(newSourceId);
+    }
+
+    loadArticles(sourceId) {
+        this._articleService.getArticlesBySourceId(sourceId)
+            .then(articlesModel => {
+                this.setArticles(articlesModel.Articles);
+            })
+            .catch(err => alert(err));
+    }
+
+    setArticles(articles) {
+        this._articlesView.showArticles(articles);
+    }
+};// The source Presenter
+class SourcePresenter {
+    constructor(sourceView, sourceService, observable) {
+        this._observable = observable;
+        this._sourceService = sourceService;
+        this._sourceView = sourceView;
+        this._sourceView.Presenter = this;
+        this._selectedSourceId = null;
+    }
+
+    set SelectedSourceId(value) {
+        if (this._selectedSourceId !== value) {
+            this._selectedSourceId = value;
+            this._observable.emit("sourceChanged", this._selectedSourceId);
+        }
+    }
+
+    loadSources() {
+        return this._sourceService.getSources()
+            .then(sourceItems => {
+                if (sourceItems) {
+                    this.setSources(sourceItems);
+                } else {
+                    // TODO: move the alert message to constant.
+                    alert("there is no source items");
+                }
+            }).catch(err => alert(err));
+    }
+
+    setSources(sourceItems) {
+        this._sourceView.showSources(sourceItems);
+    }
+};class MainPresenter
+{
+    constructor()
+    {
+        this._observable = new Observable();
+        this._sourcePresenter = new SourcePresenter(new SourcesView(), new SourceService(), this._observable);
+        this._articlesPresenter = new ArticlesPresenter(new ArticlesView(), new ArticlesService(), this._observable);
+    }
+
+    initialize() {
+        this._sourcePresenter.loadSources();
+    }
+};const articleItemTemplate = article => `<a href="${article.url}">${article.title}</a>`;
+const sourceItemTemplate = sourceItem => `<div>${sourceItem.name}</div>`;
+
+class Templates
+{
+    static get ArticleItemTemplate() {
+        return articleItemTemplate;
+    }
+
+    static get SourceItemTemplate() {
+        return sourceItemTemplate;
+    }
+};class View {
+    constructor() {
+        this._presenter = null;
+        this._viewControl = document.getElementById("view");
+    }
+
+    set Presenter(value) {
+        this._presenter = value;
+    }
+
+    clearView() {
+        this._viewControl.innerHTML = "";
+    }
+
+};// The sources view code behind
+class SourcesView extends View
+{
+    constructor() {
+        super();
+        this.handleEvent = function (event) {
+            switch (event.type) {
+                case 'click':
+                    this.onSourceSelected(event);
+                    break;
+            }
+        };
+    }
+
+    showSources(sourceItems) {
+        super.clearView();
+        let sourcesPanel = document.createElement("div");
+        for (let sourceItem of sourceItems) {
+            let sourceItemElement = document.createElement("div");
+            sourceItemElement.innerHTML = Templates.SourceItemTemplate(sourceItem);
+            sourceItemElement.setAttribute("data-source-id", sourceItem.id);
+            sourceItemElement.addEventListener("click", this, false);
+            sourcesPanel.appendChild(sourceItemElement);
+        }
+        this._viewControl.appendChild(sourcesPanel);
+    }
+    
+    onSourceSelected(event) {
+        event.preventDefault();
+        let sender = event.currentTarget;
+        if (this._presenter != null) {
+            this._presenter.SelectedSourceId = sender.getAttribute("data-source-id");
+        }
+    }
+};// The articles view.
+class ArticlesView extends View
+{
+    constructor() {
+        super();
+    }
+
+    showArticles(articles) {
+        super.clearView();
+        let articlesPanel = document.createElement("div");
+        let backElement = document.createElement("div");
+        backElement.innerHTML = `<a href="${window.location.href}">Back</div>`;
+        articlesPanel.appendChild(backElement);
+        for (let article of articles) {
+            let articleItemElement = document.createElement("div");
+            articleItemElement.innerHTML = Templates.ArticleItemTemplate(article);
+            articlesPanel.appendChild(articleItemElement);
+        }
+
+        this._viewControl.appendChild(articlesPanel);
+    }
+};(function() {
+    let mainPresenter = new MainPresenter();
+    mainPresenter.initialize();
+})();

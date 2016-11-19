@@ -26,6 +26,7 @@ module.exports = function (grunt) {
             dist: {
                 src: [
                     'Scripts/Common/Urls.js',
+                    'Scripts/Common/Observable.js',
 
                     'Scripts/Models/Article.js',
                     'Scripts/Models/Articles.js',
@@ -35,26 +36,43 @@ module.exports = function (grunt) {
                     'Scripts/Services/SourceService.js',
                     'Scripts/Services/ArticleService.js',
 
-                    'Scripts/Controllers/SourceController.js',
+                    'Scripts/Presenters/ArticlesPresenter.js',
+                    'Scripts/Presenters/SourcePresenter.js',
+                    'Scripts/Presenters/MainPresenter.js',
 
+                    'Scripts/Views/Templates.js',
+                    'Scripts/Views/View.js',
                     'Scripts/Views/SourcesView.js',
+                    'Scripts/Views/ArticlesView.js',
 
                     'Scripts/app.js'],
                 dest: 'app-min.js'
             },
         },
+        
         uglify: {
             my_target: {
                 files: {
                     'app-min.js': ['app-min.js']
                 }
             }
+        },
+
+        watch: {
+            scripts: {
+                files: ['Scripts/*.js', 'Scripts/*/*.js'],
+                tasks: ['concat'],
+                options: {
+                    spawn: false,
+                }
+            },
         }
 
     });
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-babel');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('comb', ['concat']);
     //grunt.registerTask('babel', ['babel']);

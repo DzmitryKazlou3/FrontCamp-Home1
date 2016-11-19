@@ -81,15 +81,21 @@
     <Content Include="gruntfile.js" />
     <Content Include="index.html" />
     <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\Common\Observable.js" />
     <Content Include="Scripts\Common\Urls.js" />
-    <Content Include="Scripts\Controllers\SourceController.js" />
+    <Content Include="Scripts\Presenters\ArticlesPresenter.js" />
+    <Content Include="Scripts\Presenters\MainPresenter.js" />
+    <Content Include="Scripts\Presenters\SourcePresenter.js" />
     <Content Include="Scripts\Models\Articles.js" />
     <Content Include="Scripts\Models\Article.js" />
     <Content Include="Scripts\Models\SourceItem.js" />
     <Content Include="Scripts\Models\UrlsToLogos.js" />
     <Content Include="Scripts\Services\ArticleService.js" />
     <Content Include="Scripts\Services\SourceService.js" />
+    <Content Include="Scripts\Views\ArticlesView.js" />
     <Content Include="Scripts\Views\SourcesView.js" />
+    <Content Include="Scripts\Views\Templates.js" />
+    <Content Include="Scripts\Views\View.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
