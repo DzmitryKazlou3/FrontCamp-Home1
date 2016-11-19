@@ -3,14 +3,18 @@ This file in the main entry point for defining grunt tasks and using grunt plugi
 Click here to learn more. http://go.microsoft.com/fwlink/?LinkID=513275&clcid=0x409
 */
 // require('load-grunt-tasks')(grunt); // npm install --save-dev load-grunt-tasks
-'use strict'
+
 module.exports = function (grunt) {
-    
+    require('load-grunt-tasks')(grunt);
+    require("babel-polyfill");
+    entry: ['babel-polyfill', './app/js'];
     grunt.initConfig({
         'babel': {
             options: {
                 sourceMap: true,
-                presets: ['es2015']
+                presets: ['es2015'],
+                plugins: ["transform-es2015-classes"],
+                minified: true
             },
             dist: {
                 files: {
@@ -25,6 +29,8 @@ module.exports = function (grunt) {
             },
             dist: {
                 src: [
+                    'node_modules/babel-polyfill/dist/polyfill.js',
+                    'node_modules/whatwg-fetch/fetch.js',
                     'Scripts/Common/Urls.js',
                     'Scripts/Common/Observable.js',
 
@@ -74,6 +80,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('comb', ['concat']);
+    grunt.registerTask('build-minify', ['concat', 'babel']);
+    grunt.registerTask('build-minify-watch', ['concat', 'babel', 'watch']);
     //grunt.registerTask('babel', ['babel']);
 };
